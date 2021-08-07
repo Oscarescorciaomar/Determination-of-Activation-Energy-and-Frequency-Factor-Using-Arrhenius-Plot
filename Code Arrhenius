@@ -1,0 +1,45 @@
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import math
+
+Author: Oscar M. Escorcia Omar
+
+Temperature= np.array(pd.read_excel('arrhenius.xlsx', usecols = ['Temperature(K)']))
+Rateconstant= np.array(pd.read_excel('arrhenius.xlsx', usecols = ['Rate constant(M-1.s-1)']))
+
+Datalog = np.log(Rateconstant)
+Tempinverse = (1/Temperature)
+
+x = Tempinverse
+y = Datalog
+plt.figure(figsize=(5,5))
+plt.plot(x,y, '-o')
+plt.title('Arrhenius Plot')
+plt.xlabel('1/T')
+plt.ylabel('In K')
+plt.show()
+
+def slope(y2,y1,x2,x1):
+     m= y2-y1/x2-x1
+     return(m)
+
+Slope = (slope(8.123,20.90,0.00170,0.000530))
+print('Result of Slope:')
+print(Slope)
+
+def intercept(y2,y1,x2,x1):
+     b = y1 - (((y2-y1)/(x2-x1))*x1)
+     return b
+
+Intercept = intercept(8.123,20.90,0.00170,0.000530)
+print('Result of intercept:')
+print(Intercept)
+
+Ea = Slope * (8.314)
+print('Result in J/mol of Ea:')
+print(Ea)
+
+A = math.exp(Intercept)
+print('Result of frequency factor (A):')
+print(A)
